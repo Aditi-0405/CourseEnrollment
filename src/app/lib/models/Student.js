@@ -15,7 +15,11 @@ const studentSchema = new mongoose.Schema({
     pay_reference: {type: String},
     courseRegistration: {type: Boolean, default: false},
     courses: {
-        type: [{ courseName: String, credits: { type: Number, default: 0 } }],
+        type: [{
+            categoryName: { type: String },
+            categoryCredit: { type: Number, default: 0 },
+            courseName: { type: String }
+        }],
         default: []
     }
 });
