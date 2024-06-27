@@ -1,15 +1,18 @@
 
 import {connectToDb} from '@/app/lib/dbConnection/connect';
-import Student from '@/lib/models/Student';
-import Course from '@/lib/models/Course';
+import Student from '@/app/lib/models/Student';
+import Course from '@/app/lib/models/Course';
 import { NextResponse } from 'next/server';
 
-export async function POST(req) {
+export async function POST(req, {params}) {
   await connectToDb();
 
   try {
     const data = await req.json();
-    const { studentId, courseId, selectedSubjects } = data;
+    const studentId = "667d6888def48793467845c6"
+    const courseId = params.id
+    const { selectedSubjects } = data;
+    console.log(selectedSubjects)
     const course = await Course.findById(courseId);
     if (!course) {
       return NextResponse.json({ message: 'Course not found' }, { status: 404 });
@@ -27,7 +30,7 @@ export async function POST(req) {
     let validSelection = true;
     const unavailableSubjects = [];
     const selectedCourses = [];
-    const updatedCategories = course.categary.map(category => {
+    const updatedCategories = course.category.map(category => {
       const selectedSubject = category.subjects.find(subject =>
         selectedSubjects.includes(subject.name)
       );
