@@ -3,7 +3,7 @@ import { initializePayment } from '@/app/lib/payment/paystack';
 import Student from '@/app/lib/models/Student';
 import { NextResponse } from 'next/server';
 
-export async function POST(req, res) {
+export async function POST(req) {
   if (req.method !== 'POST') {
     return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
   }
