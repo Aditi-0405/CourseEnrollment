@@ -12,7 +12,7 @@ const studentSchema = new mongoose.Schema({
     password: { type: String, required: true },
     semester: {type: String, required: true},
     paymentStatus: {type: Boolean, default: false},
-    pay_reference: {type: String},
+    pay_reference: {type: String, default:''},
     courseRegistration: {type: Boolean, default: false},
     courses: {
         type: [{
