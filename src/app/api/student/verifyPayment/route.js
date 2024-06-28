@@ -3,11 +3,11 @@ import { verifyPayment } from '@/app/lib/payment/paystack';
 import Student from '@/app/lib/models/Student';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+const handler = async() => {
 
   try {
 
-    const studentId = "667d86ab9a0fe4e5e3b7d48b";
+    const studentId = req.user.userId
     const student  = await Student.findById(studentId);
     if (!student) {
         return NextResponse.json({ message: 'Student not found' }, { status: 404 });
@@ -29,3 +29,4 @@ export async function GET() {
     return NextResponse.json({ error: 'Payment verification failed', message: error.message }, { status: 500 });
   }
 }
+export const GET = isAuthenticated(handler);

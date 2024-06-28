@@ -2,8 +2,9 @@
 import { initializePayment } from '@/app/lib/payment/paystack';
 import Student from '@/app/lib/models/Student';
 import { NextResponse } from 'next/server';
+import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
 
-export async function POST(req) {
+const handler = async(req) => {
   if (req.method !== 'POST') {
     return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
   }
@@ -11,7 +12,7 @@ export async function POST(req) {
   try {
     const data = await req.json();
     const { amount, email } = data
-    const studentId = "667d86ab9a0fe4e5e3b7d48b";
+    const studentId = req.user.userId
     const form = {
       amount: amount * 100,
       email
@@ -32,3 +33,4 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Payment initialization failed' }, { status: 500 });
   }
 }
+export const POST = isAuthenticated(handler);

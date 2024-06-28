@@ -1,17 +1,21 @@
 
 import {connectToDb} from '@/app/lib/dbConnection/connect';
 import Student from '@/app/lib/models/Student';
+import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
 import { NextResponse } from 'next/server';
+import Admin from '@/app/lib/models/Admin'
 
-export async function PATCH(req, {params}) {
+const handler = async (req, {params}) => {
     await connectToDb();
   
     try {
+      const admin= Admin.findById(req.user.userId)
+      if(!admin){
+          return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
       const data = await req.json();
       const id = params.id
       const { username, semester, paymentStatus, courseRegistration, courses } = data;
-      console.log(id)
-  
       const student = await Student.findById(id);
   
       if (!student) {
@@ -32,3 +36,4 @@ export async function PATCH(req, {params}) {
       return NextResponse.json({ message: 'Error updating student' }, { status: 500 });
     }
   }
+  export const PATCH = isAuthenticated(handler);

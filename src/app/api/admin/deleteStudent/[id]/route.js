@@ -2,9 +2,15 @@
 import {connectToDb} from '@/app/lib/dbConnection/connect';
 import Student from '@/app/lib/models/Student';
 import { NextResponse } from 'next/server';
+import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
+import Admin from '@/app/lib/models/Admin'
 
-export async function DELETE(req, {params}) {
+const handler = async(req, {params}) => {
     await connectToDb();
+    const admin= Admin.findById(req.user.userId)
+    if(!admin){
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
   
     try {
       const id = params.id
@@ -20,3 +26,4 @@ export async function DELETE(req, {params}) {
       return NextResponse.json({ message: 'Error deleting student' }, { status: 500 });
     }
   }
+  export const DELETE = isAuthenticated(handler);
