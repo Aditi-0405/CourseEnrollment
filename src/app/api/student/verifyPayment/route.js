@@ -2,8 +2,9 @@
 import { verifyPayment } from '@/app/lib/payment/paystack';
 import Student from '@/app/lib/models/Student';
 import { NextResponse } from 'next/server';
+import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
 
-const handler = async() => {
+const handler = async(req) => {
 
   try {
 

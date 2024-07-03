@@ -24,8 +24,7 @@ export async function POST(req) {
 
     const payload = { userId: student._id, email: student.email };
     const token = jwt.sign(payload, secret, { expiresIn: '1h' });
-
-    return NextResponse.json({ token }, { status: 200 });
+    return NextResponse.json({ token: token }, { status: 200 });
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json({ error: 'Login failed' }, { status: 500 });

@@ -13,7 +13,7 @@ const StudentDashboard = () => {
           </Link>
         </div>
         <div className={styles.option}>
-          <Link href="/payment" className={styles.link}>
+          <Link href="/student/payment" className={styles.link}>
             Payment
           </Link>
         </div>

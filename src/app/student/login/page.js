@@ -20,7 +20,6 @@ const StudentLogin = () => {
                 },
                 body: JSON.stringify({ email, password }),
             });
-
             if (!response.ok) {
                 const data = await response.json();
                 if (response.status === 404) {
@@ -30,7 +29,10 @@ const StudentLogin = () => {
                 }
                 return;
             }
-
+            const data = await response.json();
+            const { token } = data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('type', "student");
             router.push('/student/dashboard');
         } catch (error) {
             console.error('Error during login:', error);
