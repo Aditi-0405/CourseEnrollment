@@ -6,10 +6,21 @@ const ParentComponent = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem('token');
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    setToken(storedToken);
+  }, []);
 
   useEffect(() => {
     const fetchStudentData = async () => {
+      if (!token) {
+        setLoading(false);
+        setError('Token not found. Please login.');
+        return;
+      }
+
       try {
         const response = await fetch('/api/student/getProfile', {
           headers: {
@@ -20,7 +31,7 @@ const ParentComponent = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setStudent(data.student); 
+          setStudent(data.student);
         } else {
           setError('Failed to fetch student data');
         }
@@ -33,11 +44,31 @@ const ParentComponent = () => {
 
     if (token) {
       fetchStudentData();
-    } else {
-      setLoading(false);
-      setError('Token not found. Please login.');
     }
   }, [token]);
+
+  const checkPaymentStatus = async () => {
+    try {
+      const response = await fetch('/api/student/verifyPayment', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.paymentStatus === 'success') {
+          setStudent((prev) => ({ ...prev, paymentStatus: true }));
+        }
+      } else {
+        setError('Please refresh to verify payment status');
+      }
+    } catch (error) {
+      setError(`Error verifying payment status: ${error.message}`);
+    }
+  };
 
   const handlePayment = async () => {
     try {
@@ -49,21 +80,28 @@ const ParentComponent = () => {
         },
         body: JSON.stringify({ email: 'test@gmail.com', amount: 1000 }),
       });
-  
+
       if (!response.ok) {
         const data = await response.json();
         setError(data.error || 'Failed to initiate payment.');
         return;
       }
-  
+
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await response.json();
         console.log('Payment initiated successfully:', data);
-  
+
         const newTab = window.open(data.authorization_url, '_blank');
         if (!newTab) {
           setError('Popup blocked! Please allow popups for this site.');
+        } else {
+          const interval = setInterval(async () => {
+            await checkPaymentStatus();
+            if (student.paymentStatus) {
+              clearInterval(interval);
+            }
+          }, 5000);
         }
       } else {
         console.error('Response is not in JSON format.');
@@ -73,7 +111,6 @@ const ParentComponent = () => {
       setError(`Error initiating payment: ${error.message}`);
     }
   };
-  
 
   return (
     <div className={styles.container}>
@@ -97,7 +134,6 @@ const ParentComponent = () => {
               </div>
             )}
           </div>
-
           <div className={styles.studentPayment}>
             <h2>Student Payment</h2>
             <div className={styles.paymentDetails}>
@@ -115,7 +151,6 @@ const ParentComponent = () => {
               </ul>
             </div>
           </div>
-
         </div>
       ) : (
         <p>No student data available</p>
