@@ -28,9 +28,7 @@ const CourseRegistrationComponent = () => {
         }
       } catch (error) {
         setError(`Error fetching student data: ${error.message}`);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     if (token) {
@@ -53,11 +51,14 @@ const CourseRegistrationComponent = () => {
 
         if (response.ok) {
           const data = await response.json();
+          setLoading(false);
           setCourses(data.course);
         } else {
+          setLoading(false);
           setError('Failed to fetch courses');
         }
       } catch (error) {
+        setLoading(false);
         setError(`Error fetching courses: ${error.message}`);
       }
     };
