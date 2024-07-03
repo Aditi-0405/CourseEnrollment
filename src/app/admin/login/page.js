@@ -31,7 +31,7 @@ const AdminLogin = () => {
                 return;
             }
 
-            router.push('/');
+            router.push('/admin/dashboard');
         } catch (error) {
             console.error('Error during login:', error);
             setError('Failed to login. Please try again later.');

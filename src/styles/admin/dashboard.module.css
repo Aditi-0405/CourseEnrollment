@@ -1,0 +1,35 @@
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .heading {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .option {
+    margin-bottom: 1rem;
+  }
+  
+  .link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #0070f3;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .link:hover {
+    background-color: #005bb5;
+  }
+  
