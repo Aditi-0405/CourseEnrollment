@@ -8,7 +8,7 @@ const StudentDashboard = () => {
       <h1 className={styles.heading}>Student Dashboard</h1>
       <div className={styles.options}>
         <div className={styles.option}>
-          <Link href="/course-registration" className={styles.link}>
+          <Link href="/student/courseRegistration" className={styles.link}>
            Course Registration
           </Link>
         </div>

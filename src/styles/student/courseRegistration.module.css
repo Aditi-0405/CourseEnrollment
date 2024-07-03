@@ -1,0 +1,35 @@
+.container {
+    padding: 20px;
+  }
+  
+  .heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .coursesContainer {
+    margin-top: 20px;
+  }
+  
+  .category {
+    margin-bottom: 20px;
+  }
+  
+  .category h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
+  
+  .button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
