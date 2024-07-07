@@ -8,7 +8,13 @@ const CourseRegistrationComponent = () => {
   const [selectedCourses, setSelectedCourses] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem('token');
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    setToken(storedToken);
+  }, []);
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -28,14 +34,11 @@ const CourseRegistrationComponent = () => {
         }
       } catch (error) {
         setError(`Error fetching student data: ${error.message}`);
-      } 
+      }
     };
 
     if (token) {
       fetchStudentData();
-    } else {
-      setLoading(false);
-      setError('Token not found. Please login.');
     }
   }, [token]);
 
@@ -75,28 +78,45 @@ const CourseRegistrationComponent = () => {
     }));
   };
 
-  const handleSubmit = async () => {
-    const selectedCourseIds = Object.values(selectedCourses);
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const selectedSubjects = Object.values(selectedCourses);
     try {
-      const response = await fetch('/api/student/registerCourses', {
+      const response = await fetch('/api/student/courseRegistration', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ courses: selectedCourseIds }),
+        body: JSON.stringify({ selectedSubjects }),
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error || 'Failed to register courses.');
-        return;
+      console.log(response)
+      if(response.ok){
+        setSuccessMessage("Course Registration Successful")
       }
 
-      const data = await response.json();
-      console.log('Courses registered successfully:', data);
+      else if (!response.ok) {
+        const data = await response.json();
+
+        if (data.unavailableSubjects && data.unavailableSubjects.length > 0) {
+          const subjectsList = data.unavailableSubjects.join(', ');
+          const errorMessage = `The following subjects are unavailable: ${subjectsList}. Please choose different subjects.`;
+          setError(errorMessage);
+        }
+        else if (data.unselectedCategories && data.unselectedCategories.length > 0) {
+          const categoryList = data.unselectedCategories.join(', ');
+          const errorMessage = `The following categories are not seleted: ${categoryList}. Please choose one subject from each category.`;
+          setError(errorMessage);
+        }
+        else {
+          setError(data.message || 'Failed to register courses.');
+        }
+
+        return;
+      }
     } catch (error) {
-      setError(`Error registering courses: ${error.message}`);
+      setError(`Error registering courses`);
     }
   };
 
@@ -105,8 +125,6 @@ const CourseRegistrationComponent = () => {
       <h1 className={styles.heading}>Course Registration</h1>
       {loading ? (
         <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
       ) : student ? (
         student.paymentStatus ? (
           courses ? (
@@ -123,7 +141,7 @@ const CourseRegistrationComponent = () => {
                     >
                       <option value="">Select a course</option>
                       {category.subjects.map((subject) => (
-                        <option key={subject._id} value={subject._id}>
+                        <option key={subject._id} value={subject.name}>
                           {subject.name} - Available Seats: {subject.availableSeats}
                         </option>
                       ))}
@@ -143,6 +161,12 @@ const CourseRegistrationComponent = () => {
         )
       ) : (
         <p>No student data available</p>
+      )}
+      {error && (
+        <p>{error}</p>
+      )}
+      {successMessage && (
+        <p>{successMessage}</p>
       )}
     </div>
   );

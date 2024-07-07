@@ -49,7 +49,7 @@ const handler = async(req) => {
         }
       }
       else{
-        unselectedCategories.push(category);
+        unselectedCategories.push(category.categoryName);
       }
 
       return category;
