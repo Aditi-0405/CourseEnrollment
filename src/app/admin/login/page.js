@@ -30,13 +30,17 @@ const AdminLogin = () => {
                 }
                 return;
             }
-
+            const data = await response.json();
+            const { token } = data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('type', "admin");
             router.push('/admin/dashboard');
         } catch (error) {
             console.error('Error during login:', error);
             setError('Failed to login. Please try again later.');
         }
     };
+
 
     return (
         <div className={styles.container}>

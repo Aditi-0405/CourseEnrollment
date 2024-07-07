@@ -1,0 +1,35 @@
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.loading {
+    font-size: 18px;
+    color: #555;
+}
+
+.studentsContainer {
+    margin-top: 20px;
+}
+
+.studentList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.studentItem {
+    background-color: #f0f0f0;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}

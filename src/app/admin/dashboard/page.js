@@ -8,7 +8,7 @@ const AdminDashboard = () => {
       <h1 className={styles.heading}>Admin Dashboard</h1>
       <div className={styles.options}>
         <div className={styles.option}>
-          <Link href="/create-student" className={styles.link}>
+          <Link href="/admin/allStudents" className={styles.link}>
             Create Student
           </Link>
         </div>
