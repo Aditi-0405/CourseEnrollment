@@ -1,5 +1,5 @@
 
-import {connectToDb} from '@/app/lib/dbConnection/connect';
+import { connectToDb } from '@/app/lib/dbConnection/connect';
 import Course from '@/app/lib/models/Course';
 import { NextResponse } from 'next/server';
 import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
@@ -9,12 +9,13 @@ const handler = async (req) => {
   await connectToDb();
 
   try {
-    const admin= Admin.findById(req.user.userId)
-    if(!admin){
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const admin = Admin.findById(req.user.userId)
+    if (!admin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const data = await req.json();
     const { semester, categories } = data;
+    const existingCourse = await Course.findOne({ semester: semester })
 
     const formattedCategories = categories.map(category => ({
       categoryName: category.categoryName,
@@ -25,13 +26,17 @@ const handler = async (req) => {
         availableSeats: subject.availableSeats
       }))
     }));
+    if (existingCourse) {
+      existingCourse.category = formattedCategories
+    }
+    else {
+      const newCourse = new Course({
+        semester,
+        category: formattedCategories
+      });
 
-    const newCourse = new Course({
-      semester,
-      category: formattedCategories
-    });
-
-    await newCourse.save();
+      await newCourse.save();
+    }
 
     return NextResponse.json({ message: 'Course created successfully' }, { status: 201 });
   } catch (error) {
