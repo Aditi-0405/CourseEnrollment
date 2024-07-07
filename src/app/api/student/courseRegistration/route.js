@@ -5,22 +5,21 @@ import Course from '@/app/lib/models/Course';
 import { NextResponse } from 'next/server';
 import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
 
-const handler = async(req, {params}) => {
+const handler = async(req) => {
   await connectToDb();
 
   try {
     const data = await req.json();
     const studentId = req.user.userId
-    const courseId = params.id
-    const { selectedSubjects } = data;
-    const course = await Course.findById(courseId);
-    if (!course) {
-      return NextResponse.json({ message: 'Course not found' }, { status: 404 });
-    }
-
     const student = await Student.findById(studentId);
     if (!student) {
       return NextResponse.json({ message: 'Student not found' }, { status: 404 });
+    }
+    const semester = student.semester;
+    const course = await Course.findOne({semester: semester})
+    const { selectedSubjects } = data;
+    if (!course) {
+      return NextResponse.json({ message: 'Course not found' }, { status: 404 });
     }
 
     if (student.courseRegistration) {
@@ -30,6 +29,7 @@ const handler = async(req, {params}) => {
     let validSelection = true;
     const unavailableSubjects = [];
     const selectedCourses = [];
+    const unselectedCategories =[];
     const updatedCategories = course.category.map(category => {
       const selectedSubject = category.subjects.find(subject =>
         selectedSubjects.includes(subject.name)
@@ -48,12 +48,18 @@ const handler = async(req, {params}) => {
           unavailableSubjects.push(selectedSubject.name);
         }
       }
+      else{
+        unselectedCategories.push(category);
+      }
 
       return category;
     });
 
     if (!validSelection) {
       return NextResponse.json({ message: 'Selected subjects do not have available seats', unavailableSubjects }, { status: 400 });
+    }
+    if(unselectedCategories.length>0){
+        return NextResponse.json({ message: 'The following categories were not selected', unselectedCategories }, { status: 400 });
     }
 
     course.categary = updatedCategories;
