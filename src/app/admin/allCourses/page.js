@@ -66,6 +66,9 @@ const Courses = () => {
                     </Link>
                 </div>
             ))}
+            <Link href={`/admin/addCourse`}>
+                <button>Add Course</button>
+            </Link>
         </div>
     );
 };
