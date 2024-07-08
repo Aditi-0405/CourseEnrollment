@@ -9,17 +9,12 @@ const AdminDashboard = () => {
       <div className={styles.options}>
         <div className={styles.option}>
           <Link href="/admin/allStudents" className={styles.link}>
-            Create Student
+           Student
           </Link>
         </div>
         <div className={styles.option}>
-          <Link href="/students" className={styles.link}>
-            Manage Students
-          </Link>
-        </div>
-        <div className={styles.option}>
-          <Link href="/create-course" className={styles.link}>
-            Create Course
+          <Link href="/admin/allCourses" className={styles.link}>
+            Course
           </Link>
         </div>
       </div>
