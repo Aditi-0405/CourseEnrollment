@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from '@/styles/admin/studentsInfo.module.css';
+import Link from 'next/link';
 
 export default function Semesters() {
     const [semArray, setSemArray] = useState(null);
@@ -73,6 +74,9 @@ export default function Semesters() {
                     )}
                 </div>
             )}
+            <Link href={`/admin/addStudent`}>
+                <button>Add Student</button>
+            </Link>
         </div>
     );
 }
