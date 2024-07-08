@@ -31,7 +31,7 @@ const CreateCourse = () => {
                 throw new Error('Failed to create course');
             }
             alert('Course created successfully');
-            router.push('/courses');
+            router.push('/admin/allCourses');
         } catch (error) {
             setError(error.message);
         } finally {

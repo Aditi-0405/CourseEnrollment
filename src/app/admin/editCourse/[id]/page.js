@@ -60,7 +60,7 @@ const EditSemester = ({ params }) => {
                 throw new Error('Failed to update course');
             }
             alert('Course updated successfully');
-            router.push('/courses');
+            router.push('/admin/allCourses');
         } catch (error) {
             setError(error.message);
         }
