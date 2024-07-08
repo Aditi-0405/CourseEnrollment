@@ -28,6 +28,7 @@ const handler = async (req) => {
     }));
     if (existingCourse) {
       existingCourse.category = formattedCategories
+      await existingCourse.save();
     }
     else {
       const newCourse = new Course({
