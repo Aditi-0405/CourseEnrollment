@@ -71,7 +71,6 @@ export default function Semesters() {
                     ) : (
                         semArray && <p>No semesters found.</p>
                     )}
-                    {error && <p>Error fetching students</p>}
                 </div>
             )}
         </div>
