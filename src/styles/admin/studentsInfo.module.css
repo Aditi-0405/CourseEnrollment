@@ -1,51 +1,199 @@
 
 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
+    min-height: 100vh;
 }
 
 .title {
-    font-size: 24px;
+    font-size: 2rem;
     margin-bottom: 20px;
 }
 
+.error {
+    color: red;
+    margin-bottom: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.semButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.semButton:hover {
+    background-color: #0056b3;
+}
+
+.addStudentButton {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addStudentButton:hover {
+    background-color: #218838;
+}
+
 .loading {
-    font-size: 18px;
-    color: #888;
+    font-size: 1.5rem;
+    color: #bbb;
 }
 
 .studentsContainer {
+    width: 100%;
+    max-width: 800px;
     margin-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .studentList {
     list-style: none;
     padding: 0;
+    color: black;
 }
 
 .studentItem {
-    padding: 10px;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.editButton, .deleteButton {
+.studentItem input[type="text"] {
     padding: 5px 10px;
-    margin-left: 10px;
-    cursor: pointer;
+    margin-right: 10px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    color: #333;
+}
+
+.studentItem input[type="text"]:focus {
+    border-color: #007bff;
+}
+
+.saveButton,
+.cancelButton,
+.editButton,
+.deleteButton {
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    font-size: 14px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.saveButton {
+    margin-left: auto;
+    background-color: #007bff;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
 }
 
 .editButton {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #28a745;
+    margin-left: auto;
+}
+
+.editButton:hover {
+    background-color: #218838;
+    
 }
 
 .deleteButton {
-    background-color: #f44336;
-    color: white;
+    background-color: #dc3545;
+}
+
+.deleteButton:hover {
+    background-color: #c82333;
+}
+
+.cancelButton {
+    background-color: #ffc107;
+}
+
+.cancelButton:hover {
+    background-color: #e0a800;
+}
+
+.editSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.editSection input {
+    flex: 1;
+    margin: 5px 0;
+}
+
+.editSection button {
+    margin: 5px 5px 5px 0;
+}
+
+.editSection .saveButton,
+.editSection .cancelButton {
+    padding: 5px 15px;
+}
+
+@media (max-width: 600px) {
+    .studentItem {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .editButton {
+        margin-left: 0%;
+    }
+    .deleteButton {
+        margin-left: 0%;
+    }
+    .saveButton {
+        margin-left: 0%;
+    }
+    .cancelButton {
+        margin-left: 0%;
+    }
+    .editSection input {
+        margin: 5px 0;
+        width: 100%;
+    }
+
+    .editSection button {
+        margin: 5px 0;
+        width: 100%;
+    }
 }

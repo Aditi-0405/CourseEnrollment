@@ -31,20 +31,18 @@ export default function Semesters() {
                     throw new Error('Failed to fetch semesters');
                 }
                 const data = await res.json();
-                setLoading(false)
+                setLoading(false);
                 setSemArray(data.semArray || []);
-
             } catch (error) {
                 console.error('Error fetching semesters:', error.message);
-                setLoading(false)
-                setError('Failed to fetch semesters. Please try again.'); 
-            } 
+                setLoading(false);
+                setError('Failed to fetch semesters. Please try again.');
+            }
         };
 
         if (token) {
             fetchSemesters();
         }
-
     }, [token]);
 
     const handleSemesterClick = (semester) => {
@@ -54,28 +52,25 @@ export default function Semesters() {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Semesters</h1>
-            {error && <p className={styles.error}>{error}</p>} 
-            {loading ? (
-                <p>Loading semesters...</p>
-            ) : (
-                <div className={styles.buttonContainer}>
-                    {semArray && semArray.length > 0 ? (
-                        semArray.map((semester) => (
-                            <button
-                                key={semester}
-                                onClick={() => handleSemesterClick(semester)}
-                                className={styles.button}
-                            >
-                                Semester {semester}
-                            </button>
-                        ))
-                    ) : (
-                        semArray && <p>No semesters found.</p>
-                    )}
-                </div>
-            )}
-            <Link href={`/admin/addStudent`}>
-                <button>Add Student</button>
+            {error && <p className={styles.error}>{error}</p>}
+            {loading && <p className={styles.loading}>Loading semesters...</p>}
+            <div className={styles.buttonContainer}>
+                {semArray && semArray.length > 0 ? (
+                    semArray.map((semester) => (
+                        <button
+                            key={semester}
+                            onClick={() => handleSemesterClick(semester)}
+                            className={styles.semButton}
+                        >
+                            Semester {semester}
+                        </button>
+                    ))
+                ) : (
+                    semArray && <p>No semesters found.</p>
+                )}
+            </div>
+            <Link href="/admin/addStudent">
+                <button className={styles.addStudentButton}>Add Student</button>
             </Link>
         </div>
     );

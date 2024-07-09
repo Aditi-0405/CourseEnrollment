@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
+import styles from '@/styles/shared/form.module.css'; 
 
 const CreateStudent = () => {
     const router = useRouter();
@@ -41,43 +41,51 @@ const CreateStudent = () => {
     };
 
     return (
-        <div>
-            <h1>Create Student</h1>
-            <div>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={student.email}
-                    onChange={(e) => setStudent({ ...student, email: e.target.value })}
-                />
+        <div className={styles.container}>
+            <div className={styles.card}>
+                <h1 className={styles.heading}>Create Student</h1>
+                <div className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Email:</label>
+                        <input
+                            type="email"
+                            value={student.email}
+                            onChange={(e) => setStudent({ ...student, email: e.target.value })}
+                            className={styles.input}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Username:</label>
+                        <input
+                            type="text"
+                            value={student.username}
+                            onChange={(e) => setStudent({ ...student, username: e.target.value })}
+                            className={styles.input}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Password:</label>
+                        <input
+                            type="password"
+                            value={student.password}
+                            onChange={(e) => setStudent({ ...student, password: e.target.value })}
+                            className={styles.input}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Semester:</label>
+                        <input
+                            type="text"
+                            value={student.semester}
+                            onChange={(e) => setStudent({ ...student, semester: e.target.value })}
+                            className={styles.input}
+                        />
+                    </div>
+                    <button onClick={handleSave} disabled={loading} className={styles.button}>Save</button>
+                </div>
+                {loading && <p>Loading...</p>}
+                {error && <p className={styles.error}>{error}</p>}
             </div>
-            <div>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    value={student.username}
-                    onChange={(e) => setStudent({ ...student, username: e.target.value })}
-                />
-            </div>
-            <div>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={student.password}
-                    onChange={(e) => setStudent({ ...student, password: e.target.value })}
-                />
-            </div>
-            <div>
-                <label>Semester:</label>
-                <input
-                    type="text"
-                    value={student.semester}
-                    onChange={(e) => setStudent({ ...student, semester: e.target.value })}
-                />
-            </div>
-            <button onClick={handleSave} disabled={loading}>Save</button>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 };
