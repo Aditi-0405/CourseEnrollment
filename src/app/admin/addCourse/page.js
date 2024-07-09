@@ -39,6 +39,9 @@ const CreateCourse = () => {
             setLoading(false);
         }
     };
+    const handleCancel = () => {
+        router.push('/admin/allCourses');
+    };
 
     const handleAddCategory = () => {
         const newCategory = {
@@ -170,6 +173,7 @@ const CreateCourse = () => {
             ))}
             <button onClick={handleAddCategory} className={styles.button}>Add Category</button>
             <button onClick={handleSave} className={styles.button} disabled={loading}>Save</button>
+            <button onClick={handleCancel} className={styles.button} disabled={loading}>Cancel</button>
             {loading && <p className={styles.loading}>Loading...</p>}
             {error && <p className={styles.error}>{error}</p>}
         </div>

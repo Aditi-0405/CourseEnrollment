@@ -67,6 +67,10 @@ const EditSemester = ({ params }) => {
         }
     };
 
+    const handleCancel = () => {
+        router.push('/admin/allCourses');
+    };
+
     const handleAddCategory = () => {
         const newCategory = {
             categoryName: '',
@@ -201,6 +205,7 @@ const EditSemester = ({ params }) => {
             ))}
             <button onClick={handleAddCategory} className={styles.button}>Add Category</button>
             <button onClick={handleSave} className={styles.button}>Save</button>
+            <button onClick={handleCancel} className={styles.button}>Cancel</button>
         </div>
     );
 };
