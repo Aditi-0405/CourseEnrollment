@@ -1,8 +1,8 @@
 
-import Student from '@/app/lib/models/Student';
-import Course from '@/app/lib/models/Course'
+import Student from '@/lib/models/Student';
+import Course from '@/lib/models/Course'
 import { NextResponse } from 'next/server';
-import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
+import { isAuthenticated } from '@/lib/authentication/isAuthenticated';
 
 const handler = async(req) => {
   if (req.method !== 'GET') {

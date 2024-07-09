@@ -1,9 +1,9 @@
 
-import { connectToDb } from '@/app/lib/dbConnection/connect';
-import Course from '@/app/lib/models/Course';
+import { connectToDb } from '@/lib/dbConnection/connect';
+import Course from '@/lib/models/Course';
 import { NextResponse } from 'next/server';
-import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
-import Admin from '@/app/lib/models/Admin'
+import { isAuthenticated } from '@/lib/authentication/isAuthenticated';
+import Admin from '@/lib/models/Admin'
 
 const handler = async (req) => {
     await connectToDb();

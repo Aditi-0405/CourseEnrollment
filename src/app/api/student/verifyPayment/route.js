@@ -1,8 +1,8 @@
 
-import { verifyPayment } from '@/app/lib/payment/paystack';
-import Student from '@/app/lib/models/Student';
+import { verifyPayment } from '@/lib/payment/paystack';
+import Student from '@/lib/models/Student';
 import { NextResponse } from 'next/server';
-import { isAuthenticated } from '@/app/lib/authentication/isAuthenticated';
+import { isAuthenticated } from '@/lib/authentication/isAuthenticated';
 
 const handler = async(req) => {
 

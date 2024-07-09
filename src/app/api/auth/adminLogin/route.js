@@ -1,6 +1,6 @@
 
-import {connectToDb} from '@/app/lib/dbConnection/connect';
-import Admin from '@/app/lib/models/Admin';
+import {connectToDb} from '@/lib/dbConnection/connect';
+import Admin from '@/lib/models/Admin';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
