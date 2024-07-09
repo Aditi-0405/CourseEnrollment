@@ -1,7 +1,8 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import styles from '@/styles/admin/allCourses.module.css'
 
 const Courses = () => {
     const [courses, setCourses] = useState(null);
@@ -42,15 +43,15 @@ const Courses = () => {
     }, [token]);
 
     return (
-        <div>
-            <h1>Courses</h1>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+        <div className={styles.container}>
+            <h1 className={styles.heading}>Courses</h1>
+            {loading && <p className={styles.loading}>Loading...</p>}
+            {error && <p className={styles.error}>{error}</p>}
             {courses && courses.map((course) => (
-                <div key={course._id}>
+                <div key={course._id} className={styles.course}>
                     <h2>Semester {course.semester}</h2>
                     {course.category.map((category) => (
-                        <div key={category._id}>
+                        <div key={category._id} className={styles.category}>
                             <h3>{category.categoryName} (Credits: {category.categoryCredit})</h3>
                             <ul>
                                 {category.subjects.map((subject) => (
@@ -62,12 +63,12 @@ const Courses = () => {
                         </div>
                     ))}
                     <Link href={`/admin/editCourse/${course._id}`}>
-                        <button>Edit</button>
+                        <button className={styles.button}>Edit</button>
                     </Link>
                 </div>
             ))}
             <Link href={`/admin/addCourse`}>
-                <button>Add Course</button>
+                <button className={styles.button}>Add Course</button>
             </Link>
         </div>
     );
