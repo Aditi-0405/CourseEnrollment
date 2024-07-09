@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from '@/styles/admin/editCourse.module.css';
+import styles from '@/styles/admin/course.module.css';
 
 const EditSemester = ({ params }) => {
     const router = useRouter();

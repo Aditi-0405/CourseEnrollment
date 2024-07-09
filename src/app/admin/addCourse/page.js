@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import styles from '@/styles/admin/course.module.css'
 
 const CreateCourse = () => {
     const router = useRouter();
@@ -71,21 +72,22 @@ const CreateCourse = () => {
     };
 
     return (
-        <div>
-            <h1>Create Course</h1>
-            <div>
-                <label>Semester:</label>
+        <div className={styles.container}>
+            <h1 className={styles.heading}>Create Course</h1>
+            <div className={styles.formGroup}>
+                <label className={styles.label}>Semester:</label>
                 <input
                     type="text"
                     value={course.semester}
                     onChange={(e) => setCourse({ ...course, semester: e.target.value })}
+                    className={styles.input}
                 />
             </div>
             {course.categories.map((category, catIdx) => (
-                <div key={catIdx}>
-                    <h3>{category.categoryName} (Credits: {category.categoryCredit})</h3>
+                <div key={catIdx} className={styles.formGroup}>
+                    <h3 className={styles.category}>{category.categoryName} (Credits: {category.categoryCredit})</h3>
                     <div>
-                        <label>Category Name:</label>
+                        <label className={styles.label}>Category Name:</label>
                         <input
                             type="text"
                             value={category.categoryName}
@@ -94,10 +96,11 @@ const CreateCourse = () => {
                                 newCategories[catIdx].categoryName = e.target.value;
                                 setCourse({ ...course, categories: newCategories });
                             }}
+                            className={styles.input}
                         />
                     </div>
                     <div>
-                        <label>Category Credit:</label>
+                        <label className={styles.label}>Category Credit:</label>
                         <input
                             type="number"
                             value={category.categoryCredit}
@@ -106,13 +109,14 @@ const CreateCourse = () => {
                                 newCategories[catIdx].categoryCredit = e.target.value;
                                 setCourse({ ...course, categories: newCategories });
                             }}
+                            className={styles.input}
                         />
                     </div>
                     <ul>
                         {category.subjects.map((subject, subIdx) => (
-                            <li key={subIdx}>
+                            <li key={subIdx} className={styles.subjectContainer}>
                                 <div>
-                                    <label>Subject Name:</label>
+                                    <label className={styles.subjectLabel}>Subject Name:</label>
                                     <input
                                         type="text"
                                         value={subject.name}
@@ -123,10 +127,11 @@ const CreateCourse = () => {
                                             newCategories[catIdx].subjects = newSubjects;
                                             setCourse({ ...course, categories: newCategories });
                                         }}
+                                        className={styles.input}
                                     />
                                 </div>
                                 <div>
-                                    <label>Total Intake:</label>
+                                    <label className={styles.subjectLabel}>Total Intake:</label>
                                     <input
                                         type="number"
                                         value={subject.totalIntake}
@@ -137,10 +142,11 @@ const CreateCourse = () => {
                                             newCategories[catIdx].subjects = newSubjects;
                                             setCourse({ ...course, categories: newCategories });
                                         }}
+                                        className={styles.input}
                                     />
                                 </div>
                                 <div>
-                                    <label>Available Seats:</label>
+                                    <label className={styles.subjectLabel}>Available Seats:</label>
                                     <input
                                         type="number"
                                         value={subject.availableSeats}
@@ -151,20 +157,21 @@ const CreateCourse = () => {
                                             newCategories[catIdx].subjects = newSubjects;
                                             setCourse({ ...course, categories: newCategories });
                                         }}
+                                        className={styles.input}
                                     />
                                 </div>
-                                <button onClick={() => handleRemoveSubject(catIdx, subIdx)}>Remove Subject</button>
+                                <button onClick={() => handleRemoveSubject(catIdx, subIdx)} className={`${styles.button} ${styles.removeButton}`}>Remove Subject</button>
                             </li>
                         ))}
                     </ul>
-                    <button onClick={() => handleAddSubject(catIdx)}>Add Subject</button>
-                    <button onClick={() => handleRemoveCategory(catIdx)}>Remove Category</button>
+                    <button onClick={() => handleAddSubject(catIdx)} className={styles.button}>Add Subject</button>
+                    <button onClick={() => handleRemoveCategory(catIdx)} className={`${styles.button} ${styles.removeButton}`}>Remove Category</button>
                 </div>
             ))}
-            <button onClick={handleAddCategory}>Add Category</button>
-            <button onClick={handleSave} disabled={loading}>Save</button>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <button onClick={handleAddCategory} className={styles.button}>Add Category</button>
+            <button onClick={handleSave} className={styles.button} disabled={loading}>Save</button>
+            {loading && <p className={styles.loading}>Loading...</p>}
+            {error && <p className={styles.error}>{error}</p>}
         </div>
     );
 };
