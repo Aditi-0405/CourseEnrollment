@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/authcontext';
+import { useAuth } from '@/context/AuthContext';
 
 import styles from '../styles/shared/home.module.css';
 import Link from 'next/link';

@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/authcontext';
+import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/shared/navbar.module.css';
 
 const Navbar = () => {
