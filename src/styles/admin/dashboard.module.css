@@ -13,12 +13,13 @@
 
 .options {
   display: flex;
+  flex-wrap: wrap; 
   justify-content: center;
   margin-top: 2rem;
 }
 
 .option {
-  margin: 0 1rem;
+  margin: 0.5rem; 
 }
 
 .link {
@@ -45,4 +46,15 @@
 
 .button:hover {
   background-color: #005fcc;
+}
+
+@media (max-width: 768px) {
+  .options {
+    flex-direction: column; 
+    align-items: center; 
+  }
+
+  .option {
+    margin: 0.5rem 0; 
+  }
 }

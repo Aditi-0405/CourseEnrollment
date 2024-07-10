@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.navbarBrand}>CollegeApp</div>
+      <div className={styles.navbarBrand}>CourseEnrollment</div>
       <ul className={styles.navList}>
         <li className={router.pathname === '/' ? styles.activeNavItem : styles.navItem}>
           <Link href="/">Home</Link>
@@ -25,9 +25,15 @@ const Navbar = () => {
             </li>
           </>
         ) : (
-          <li className={router.pathname === '/login' ? styles.activeNavItem : styles.navItem}>
-            <Link href="/login">Login</Link>
-          </li>
+          <>
+            <li className={router.pathname === '/login' ? styles.activeNavItem : styles.navItem}>
+              <Link href="/admin/login">Admin Login</Link>
+            </li>
+            <li className={router.pathname === '/login' ? styles.activeNavItem : styles.navItem}>
+              <Link href="/student/login">Student Login</Link>
+            </li>
+          </>
+
         )}
       </ul>
     </nav>
