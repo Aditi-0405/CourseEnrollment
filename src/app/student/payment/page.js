@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import styles from '@/styles/student/dashboard.module.css';
+import styles from '@/styles/student/payment.module.css';
 
-const ParentComponent = () => {
+const Payment = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -114,7 +114,6 @@ const ParentComponent = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>Student Dashboard</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -126,18 +125,8 @@ const ParentComponent = () => {
             <p><strong>Username:</strong> {student.username}</p>
             <p><strong>Email:</strong> {student.email}</p>
             <p><strong>Semester:</strong> {student.semester}</p>
-            <p><strong>Course Registration:</strong> {student.courseRegistration ? 'Registered' : 'Not Registered'}</p>
-            {student.courseRegistration && <p><strong>Courses:</strong></p>}
-            
-            <ul>
-              {student.courses.map(course => (
-                <li key={course._id}>
-                  {course.categoryName}: {course.courseName}
-                </li>
-              ))}
-            </ul>
           </div>
-          
+
           <div className={styles.paymentSection}>
             <h2>Payment Status</h2>
             <div className={`${styles.paymentStatus} ${student.paymentStatus ? styles.success : styles.pending}`}>
@@ -164,4 +153,4 @@ const ParentComponent = () => {
   );
 };
 
-export default ParentComponent;
+export default Payment;

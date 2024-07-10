@@ -1,54 +1,51 @@
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .paymentStatus {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 4px;
-  }
-  
-  .paymentStatus p {
-    margin: 0;
-    font-size: 1.2rem;
-  }
-  
-  .paymentStatus.success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-  }
-  
-  .paymentStatus.pending {
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-    color: #856404;
-  }
-  
-  .buttonContainer {
-    margin-top: 1rem;
-  }
-  
-  .button {
-    padding: 0.5rem 1rem;
-    background-color: #0070f3;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #005bb5;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.dashboardContent {
+  margin-top: 2rem;
+}
+
+.studentInfo {
+  margin-bottom: 2rem;
+}
+
+.paymentSection {
+  margin-top: 2rem;
+}
+
+.paymentStatus {
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.pending {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.buttonContainer {
+  margin-top: 1rem;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #005fcc;
+}
