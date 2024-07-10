@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/authcontext';
 import styles from '@/styles/shared/form.module.css';
 
 const StudentLogin = () => {
@@ -8,6 +9,7 @@ const StudentLogin = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,8 +32,8 @@ const StudentLogin = () => {
                 return;
             }
             const data = await response.json();
-            const { token } = data;
-            localStorage.setItem('token', token);
+            login(data.username, data.token);
+            
             localStorage.setItem('type', "student");
             router.push('/student/dashboard');
         } catch (error) {

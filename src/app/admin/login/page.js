@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/authcontext';
 import styles from '@/styles/shared/form.module.css';
 
 const AdminLogin = () => {
@@ -8,6 +9,7 @@ const AdminLogin = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,9 +33,10 @@ const AdminLogin = () => {
                 return;
             }
             const data = await response.json();
-            const { token } = data;
-            localStorage.setItem('token', token);
+            
+            login(data.username, data.token);
             localStorage.setItem('type', "admin");
+
             router.push('/admin/dashboard');
         } catch (error) {
             console.error('Error during login:', error);
