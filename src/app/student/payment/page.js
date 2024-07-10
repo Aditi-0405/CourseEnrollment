@@ -60,7 +60,7 @@ const ParentComponent = () => {
       if (response.ok) {
         const data = await response.json();
         if (data.paymentStatus === 'success') {
-          setStudent((prev) => ({ ...prev, paymentStatus: true }));
+          setStudent((prev) => ({ ...prev, paymentStatus: true, pay_reference: data.pay_reference }));
         }
       } else {
         setError('Please refresh to verify payment status');
@@ -78,7 +78,7 @@ const ParentComponent = () => {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: 'test@gmail.com', amount: 1000 }),
+        body: JSON.stringify({ email: `${student.email}`, amount: 1000 }),
       });
 
       if (!response.ok) {
@@ -120,35 +120,40 @@ const ParentComponent = () => {
       ) : error ? (
         <p>{error}</p>
       ) : student ? (
-        <div className={styles.paymentContainer}>
-          <h2>Payment Status</h2>
-          <div className={`${styles.paymentStatus} ${student.paymentStatus ? styles.success : styles.pending}`}>
-            {student.paymentStatus ? (
-              <p>Payment has been made successfully.</p>
-            ) : (
-              <div>
-                <p>Payment is pending.</p>
-                <div className={styles.buttonContainer}>
-                  <button className={styles.button} onClick={handlePayment}>Proceed to Pay</button>
-                </div>
-              </div>
-            )}
+        <div className={styles.dashboardContent}>
+          <div className={styles.studentInfo}>
+            <h2>Student Information</h2>
+            <p><strong>Username:</strong> {student.username}</p>
+            <p><strong>Email:</strong> {student.email}</p>
+            <p><strong>Semester:</strong> {student.semester}</p>
+            <p><strong>Course Registration:</strong> {student.courseRegistration ? 'Registered' : 'Not Registered'}</p>
+            {student.courseRegistration && <p><strong>Courses:</strong></p>}
+            
+            <ul>
+              {student.courses.map(course => (
+                <li key={course._id}>
+                  {course.categoryName}: {course.courseName}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className={styles.studentPayment}>
-            <h2>Student Payment</h2>
-            <div className={styles.paymentDetails}>
-              <p><strong>Username:</strong> {student.username}</p>
-              <p><strong>Email:</strong> {student.email}</p>
-              <p><strong>Semester:</strong> {student.semester}</p>
-              <p><strong>Course Registration:</strong> {student.courseRegistration ? 'Registered' : 'Not Registered'}</p>
-              <p><strong>Courses:</strong></p>
-              <ul>
-                {student.courses.map(course => (
-                  <li key={course._id}>
-                    {course.categoryName}: {course.courseName}
-                  </li>
-                ))}
-              </ul>
+          
+          <div className={styles.paymentSection}>
+            <h2>Payment Status</h2>
+            <div className={`${styles.paymentStatus} ${student.paymentStatus ? styles.success : styles.pending}`}>
+              {student.paymentStatus ? (
+                <div>
+                  <p>Payment has been made successfully.</p>
+                  <p>Your payment reference is: {student.pay_reference}</p>
+                </div>
+              ) : (
+                <div>
+                  <p>Payment is pending.</p>
+                  <div className={styles.buttonContainer}>
+                    <button className={styles.button} onClick={handlePayment}>Proceed to Pay</button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
