@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from '@/styles/student/courseRegistration.module.css';
 
 const CourseRegistrationComponent = () => {
@@ -10,6 +11,8 @@ const CourseRegistrationComponent = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [token, setToken] = useState(null);
+  const router = useRouter()
+  
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -66,7 +69,7 @@ const CourseRegistrationComponent = () => {
       }
     };
 
-    if (student && student.paymentStatus) {
+    if (student) {
       fetchCourses();
     }
   }, [student, token]);
@@ -79,7 +82,7 @@ const CourseRegistrationComponent = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const selectedSubjects = Object.values(selectedCourses);
     try {
       const response = await fetch('/api/student/courseRegistration', {
@@ -91,32 +94,27 @@ const CourseRegistrationComponent = () => {
         body: JSON.stringify({ selectedSubjects }),
       });
 
-      console.log(response)
-      if(response.ok){
-        setSuccessMessage("Course Registration Successful")
-      }
-
-      else if (!response.ok) {
+      if (response.ok) {
+        setSuccessMessage('Course Registration Successful');
+      } else {
         const data = await response.json();
 
         if (data.unavailableSubjects && data.unavailableSubjects.length > 0) {
           const subjectsList = data.unavailableSubjects.join(', ');
           const errorMessage = `The following subjects are unavailable: ${subjectsList}. Please choose different subjects.`;
           setError(errorMessage);
-        }
-        else if (data.unselectedCategories && data.unselectedCategories.length > 0) {
+        } else if (data.unselectedCategories && data.unselectedCategories.length > 0) {
           const categoryList = data.unselectedCategories.join(', ');
-          const errorMessage = `The following categories are not seleted: ${categoryList}. Please choose one subject from each category.`;
+          const errorMessage = `The following categories are not selected: ${categoryList}. Please choose one subject from each category.`;
           setError(errorMessage);
-        }
-        else {
+        } else {
           setError(data.message || 'Failed to register courses.');
         }
 
         return;
       }
     } catch (error) {
-      setError(`Error registering courses`);
+      setError('Error registering courses');
     }
   };
 
@@ -127,7 +125,24 @@ const CourseRegistrationComponent = () => {
         <p>Loading...</p>
       ) : student ? (
         student.paymentStatus ? (
-          courses ? (
+          student.courseRegistration ? (
+            <div>
+              <h2>Student and Course Info</h2>
+              <div>
+                <p><strong>Username:</strong> {student.username}</p>
+                <p><strong>Email:</strong> {student.email}</p>
+                <p><strong>Semester:</strong> {student.semester}</p>
+                <p><strong>Registered Courses:</strong></p>
+                <ul>
+                  {student.courses.map(course => (
+                    <li key={course._id}>
+                      {course.categoryName}: {course.courseName}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : courses ? (
             <div className={styles.coursesContainer}>
               <h2>Available Courses</h2>
               <form onSubmit={handleSubmit}>
@@ -157,17 +172,19 @@ const CourseRegistrationComponent = () => {
             <p>No courses available</p>
           )
         ) : (
-          <p>Payment is pending. Please complete the payment to register for courses.</p>
+          <div>
+            <p>Payment is pending. Please complete the payment to register for courses.</p>
+            <button onClick={() => router.push('/student/payment')}>
+              Payment
+            </button>
+          </div>
+
         )
       ) : (
         <p>No student data available</p>
       )}
-      {error && (
-        <p>{error}</p>
-      )}
-      {successMessage && (
-        <p>{successMessage}</p>
-      )}
+      {error && <p>{error}</p>}
+      {successMessage && <p>{successMessage}</p>}
     </div>
   );
 };
