@@ -8,13 +8,23 @@ const AdminDashboard = () => {
       <h1 className={styles.heading}>Admin Dashboard</h1>
       <div className={styles.options}>
         <div className={styles.option}>
-          <Link href="/admin/allStudents" className={styles.link}>
-           Student
+          <Link href="/admin/allStudents">
+            <button className={styles.button}>Student</button>
           </Link>
         </div>
         <div className={styles.option}>
-          <Link href="/admin/allCourses" className={styles.link}>
-            Course
+          <Link href="/admin/allCourses">
+            <button className={styles.button}>Course</button>
+          </Link>
+        </div>
+        <div className={styles.option}>
+          <Link href="/admin/addCourse">
+            <button className={styles.button}>Add Course</button>
+          </Link>
+        </div>
+        <div className={styles.option}>
+          <Link href="/admin/addStudent">
+            <button className={styles.button}>Add Student</button>
           </Link>
         </div>
       </div>
