@@ -1,35 +1,55 @@
+
 .container {
-    padding: 20px;
-  }
-  
-  .heading {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .coursesContainer {
-    margin-top: 20px;
-  }
-  
-  .category {
-    margin-bottom: 20px;
-  }
-  
-  .category h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-  }
-  
-  .button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
+  margin: 0 auto;
+  padding: 2rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+.heading {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.coursesContainer {
+  margin-top: 2rem;
+}
+
+.categoryTitle {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.selectWrapper {
+  margin-bottom: 1.5rem;
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.buttonWrapper {
+  margin-top: 2rem;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.successMessage {
+  color: green;
+  margin-top: 1rem;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 1rem;
+}

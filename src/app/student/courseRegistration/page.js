@@ -11,7 +11,7 @@ const CourseRegistrationComponent = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [token, setToken] = useState(null);
-  const router = useRouter()
+  const router = useRouter();
   
 
   useEffect(() => {
@@ -120,35 +120,41 @@ const CourseRegistrationComponent = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>Course Registration</h1>
+      <div className={styles.heading}>
+        <h1>Course Registration Completed</h1>
+      </div>
       {loading ? (
         <p>Loading...</p>
       ) : student ? (
         student.paymentStatus ? (
           student.courseRegistration ? (
             <div>
-              <h2>Student and Course Info</h2>
+              <div className={styles.categoryTitle}>
+                <h2>Student and Course Info</h2>
+              </div>
               <div>
                 <p><strong>Username:</strong> {student.username}</p>
                 <p><strong>Email:</strong> {student.email}</p>
                 <p><strong>Semester:</strong> {student.semester}</p>
                 <p><strong>Registered Courses:</strong></p>
-                <ul>
-                  {student.courses.map(course => (
-                    <li key={course._id}>
-                      {course.categoryName}: {course.courseName}
-                    </li>
-                  ))}
-                </ul>
+                {student.courses.map(course => (
+                  <div key={course._id}>
+                    <p><strong>{course.categoryName}:</strong> {course.courseName}</p>
+                  </div>
+                ))}
               </div>
             </div>
           ) : courses ? (
             <div className={styles.coursesContainer}>
-              <h2>Available Courses</h2>
+              <div className={styles.categoryTitle}>
+                <h2>Available Courses</h2>
+              </div>
               <form onSubmit={handleSubmit}>
                 {courses.category.map((category) => (
-                  <div key={category._id} className={styles.category}>
-                    <h3>{category.categoryName}</h3>
+                  <div key={category._id} className={styles.selectWrapper}>
+                    <div className={styles.categoryTitle}>
+                      <h3>{category.categoryName}</h3>
+                    </div>
                     <select
                       value={selectedCourses[category._id] || ''}
                       onChange={(e) => handleCourseChange(category._id, e.target.value)}
@@ -163,9 +169,11 @@ const CourseRegistrationComponent = () => {
                     </select>
                   </div>
                 ))}
-                <button type="submit" className={styles.button}>
-                  Register Courses
-                </button>
+                <div className={styles.buttonWrapper}>
+                  <button type="submit" className={styles.button}>
+                    Register Courses
+                  </button>
+                </div>
               </form>
             </div>
           ) : (
@@ -174,7 +182,7 @@ const CourseRegistrationComponent = () => {
         ) : (
           <div>
             <p>Payment is pending. Please complete the payment to register for courses.</p>
-            <button onClick={() => router.push('/student/payment')}>
+            <button onClick={() => router.push('/student/payment')} className={styles.button}>
               Payment
             </button>
           </div>
@@ -183,8 +191,8 @@ const CourseRegistrationComponent = () => {
       ) : (
         <p>No student data available</p>
       )}
-      {error && <p>{error}</p>}
-      {successMessage && <p>{successMessage}</p>}
+      {error && <p className={styles.errorMessage}>{error}</p>}
+      {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
     </div>
   );
 };
